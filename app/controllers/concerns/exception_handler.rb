@@ -11,6 +11,10 @@ module ExceptionHandler
     rescue_from ExceptionHandler::AuthenticationError, with: :unauthorized_request
     rescue_from ExceptionHandler::MissingToken, with: :unprocessable_entity
     rescue_from ExceptionHandler::InvalidToken, with: :unprocessable_entity
+
+    rescue_from ActiveRecord::RecordNotFound do |e|
+      json_response({message: e.message}, :not_found)
+    end
   end
 
   private
