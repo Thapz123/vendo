@@ -5,6 +5,11 @@ import {
   hashHistory,
   Router,
   Route,
-  IndexRoute 
+  IndexRoute
 } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux'
+import configureStore from '../store/configureStore';
+
+const store = configureStore();
+
+const history = syncHistoryWithStore(browserHistory, store);
