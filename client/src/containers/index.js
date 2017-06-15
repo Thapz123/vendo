@@ -13,3 +13,23 @@ import configureStore from '../store/configureStore';
 const store = configureStore();
 
 const history = syncHistoryWithStore(browserHistory, store);
+
+class RootContainer extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+
+    return (
+      <Provider store={ store }>
+        <Router history={ history }>
+          <Route path='/' component={ App }>
+
+
+          </Route>
+        </Router>
+      </Provider>
+    );
+  }
+}
