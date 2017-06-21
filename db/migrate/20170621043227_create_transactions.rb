@@ -11,7 +11,7 @@ class CreateTransactions < ActiveRecord::Migration[5.0]
       t.timestamps
     end
 
-    add_index :accounts, :owner_id
-    add_index :accounts, :recipient_id
+    add_index :transactions, :maker_id
+    add_index :transactions, :recipient_id
   end
 end
