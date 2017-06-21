@@ -6,6 +6,8 @@ class User < ApplicationRecord
   validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create
   validates_length_of :password, in: 6 .. 128, allow_nil: false, allow_blank: false
 
+  after_initialize :set_username
+
   has_many(
     :payments_made,
     class_name: "Payment",
@@ -46,5 +48,10 @@ class User < ApplicationRecord
 
   has_many :comments
 
+  private
 
+  def set_username
+    self.username ||= "#{self.first_name}-#{self.last_name}-#{rand(1..99)}" if self.new_record?
+  end
+  
 end
