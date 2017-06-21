@@ -1,7 +1,8 @@
 # Authenticates User with e-mail and password
 class AuthenticateUser
-  def initialize(email, password)
-    @email = email
+  def initialize(opts = {email: nil, username: nil}, password)
+    @email = opts.fetch('email')
+    @username = opts.fetch('username')
     @password = password
   end
 
@@ -11,10 +12,10 @@ class AuthenticateUser
 
   private
 
-  attr_reader :email, :password
+  attr_reader :email, :username, :password
 
   def user
-    user = User.find_by(email: email)
+    user = email ? User.find_by(email: email) : User.find_by(username: username)
     return user if user && user.authenticate(password)
     raise(ExceptionHandler::AuthenticationError, AuthMessage.invalid_credentials)
   end
