@@ -4,8 +4,8 @@ class UsersController < ApplicationController
   # Signup route
   def create
     user = User.create!(user_params)
-    auth_options = {email: user.email, username: user.username}
-    auth_token = AuthenticateUser.new(auth_options, user.password).call
+    auth_options = {email: user.email, username: user.username, password: user.password}
+    auth_token = AuthenticateUser.new(auth_options).call
     response = { message: AuthMessage.account_created, auth_token: auth_token }
     json_response(response, :created)
   end
