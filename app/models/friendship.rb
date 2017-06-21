@@ -1,6 +1,8 @@
 class Friendship < ApplicationRecord
-  validates_presence_of :requester_id, :responder_id
+  validates_presence_of :requester_id, :responder_id, :status
   validates_uniqueness_of :responder_id, scope: [:requester_id]
+  validates_inclusion_of :status, in: %w(pending resolved rejected)
+  validates_with TwoPartyValidator, :initiator => :requester_id, :receiver => :responder_id
 
   belongs_to(
     :requester,
