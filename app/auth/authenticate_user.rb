@@ -1,9 +1,9 @@
 # Authenticates User with e-mail and password
 class AuthenticateUser
-  def initialize(opts = {email: nil, username: nil}, password)
-    @email = opts.fetch('email')
-    @username = opts.fetch('username')
-    @password = password
+  def initialize(opts = {email: nil, username: nil, password: nil})
+    @email = opts.fetch(:email)
+    @username = opts.fetch(:username)
+    @password = opts.fetch(:password)
   end
 
   def call
