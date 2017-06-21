@@ -33,7 +33,18 @@ class User < ApplicationRecord
     primary_key: :id,
     foreign_key: :recipient_id
   )
-  # has_many :friendships
-  # likes
-  # comments
+
+  has_many :friendships
+
+  has_many(
+    :friends,
+    through: :friendships,
+    source: :friend
+  )
+
+  has_many :likes
+
+  has_many :comments
+
+  
 end
