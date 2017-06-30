@@ -8,8 +8,8 @@ class ApplicationController < ActionController::API
 
   private
 
-  # Validate request with token and return user if successful 
+  # Validate request with token and return user if successful
   def authorize_request
-    @current_user = (AuthorizeApiRequest.new(request.headers).call)[:user]
+    @current_user = (AuthorizeApiRequest.new(request.headers).call)[:user].as_json(:except => [:password_digest])
   end
 end
