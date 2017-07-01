@@ -42,9 +42,7 @@ class Transaction < ApplicationRecord
     dependent: :destroy
   )
 
-
-
-  def currently_liked?
+  def charge_user(user_id)
 
   end
 
