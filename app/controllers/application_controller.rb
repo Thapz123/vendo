@@ -10,6 +10,6 @@ class ApplicationController < ActionController::API
 
   # Validate request with token and return user if successful
   def authorize_request
-    @current_user = (AuthorizeApiRequest.new(request.headers).call)[:user].as_json(:except => [:password_digest])
+    @current_user = (AuthorizeApiRequest.new(request.headers).call)[:user]
   end
 end
