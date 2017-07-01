@@ -8,32 +8,40 @@ class User < ApplicationRecord
   validates_length_of :password, in: 6 .. 128, allow_nil: false, allow_blank: false
 
   after_initialize :set_username
+  after_create :build_account
   before_save :downcase_username
+
+  has_one(
+    :account,
+    class_name: "Account",
+    primary_key: :id,
+    foreign_key: :owner_id
+  )
 
   has_many(
     :payments_made,
-    class_name: "Payment",
+    class_name: "Transaction",
     primary_key: :id,
     foreign_key: :maker_id
   )
 
   has_many(
     :payments_received,
-    class_name: "Payment",
+    class_name: "Transaction",
     primary_key: :id,
     foreign_key: :recipient_id
   )
 
   has_many(
     :charges_made,
-    class_name: "Charge",
+    class_name: "Transaction",
     primary_key: :id,
     foreign_key: :maker_id
   )
 
   has_many(
     :charges_received,
-    class_name: "Charge",
+    class_name: "Transaction",
     primary_key: :id,
     foreign_key: :recipient_id
   )
@@ -58,9 +66,16 @@ class User < ApplicationRecord
 
   def set_username
     self.username ||= "#{self.first_name.downcase}-#{self.last_name.downcase}-#{rand(1..99)}" if self.new_record?
+    true
   end
 
   def downcase_username
     self.username.downcase!
+    true
+  end
+
+  def build_account
+    new_balance = rand(25.00 .. 125.00).round(2)
+    Account.create!(owner_id: self.id, balance: new_balance)
   end
 end
