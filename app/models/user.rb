@@ -8,6 +8,7 @@ class User < ApplicationRecord
   validates_length_of :password, in: 6 .. 128, allow_nil: false, allow_blank: false
 
   after_initialize :set_username
+  before_save :downcase_username
 
   has_many(
     :payments_made,
@@ -59,4 +60,7 @@ class User < ApplicationRecord
     self.username ||= "#{self.first_name.downcase}-#{self.last_name.downcase}-#{rand(1..99)}" if self.new_record?
   end
 
+  def downcase_username
+    self.username.downcase!
+  end
 end
