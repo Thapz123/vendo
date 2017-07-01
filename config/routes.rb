@@ -4,10 +4,12 @@ Rails.application.routes.draw do
   post 'login',  to: 'authentication#authenticate'
   post 'signup', to: 'users#create'
 
+  resources ':userId', controller: 'users', except: [:create, :index]
+
   scope ':userId' do
     resources :transactions, except: [:new, :create] do
       resources :likes, except: [:show, :destroy]
-      # resources :comments, only: [:create, :update, :destroy]
+      resources :comments, only: [:create, :update, :destroy]
     end
 
     post 'pay',    to: 'transactions#pay'
