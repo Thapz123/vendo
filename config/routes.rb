@@ -4,9 +4,14 @@ Rails.application.routes.draw do
   post 'login',  to: 'authentication#authenticate'
   post 'signup', to: 'users#create'
 
-  resources ':userId', controller: 'users', except: [:create, :index]
+  # Temporary move; otherwise foo was taken as username
+  resources :foo, controller: 'likes', only: [:index]
 
-  scope ':userId' do
+  scope ':username' do
+    get '', to: 'users#show'
+    put '', to: 'users#update'
+    delete '', to: 'users#destroy'
+    
     resources :transactions, except: [:new, :create] do
       resources :likes, except: [:show, :destroy]
       resources :comments, only: [:create, :update, :destroy]

@@ -5,22 +5,25 @@ class TransactionsController < ApplicationController
   end
 
   def show
-
+    # get txn by id
+    # return txn + likes + comments
   end
 
   def pay
-    json_response({msg: 'hello'})
+
   end
 
   def charge
-    json_response({msg: 'byebye'})
+
   end
 
   def update
 
   end
 
-  def destroy
+  private
 
+  def transactions_params
+    params.permit(:username, :transaction_id. :amount, :memo, :status, :visibility)
   end
 end

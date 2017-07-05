@@ -7,15 +7,14 @@ class UsersController < ApplicationController
     auth_options = {email: user.email, username: user.username, password: user.password}
     auth_token = AuthenticateUser.new(auth_options).call
     response = { message: AuthMessage.account_created, auth_token: auth_token }
-    json_response(response, :created)
-  end
-
-  def index
-
+    json_response(response)
   end
 
   def show
-
+    user = User.find_by(username: user_params[:username].downcase)
+    result = {user: user.as_json}
+    result[:user].store(:account_balance, @current_user.account.balance) if @current_user == user
+    json_response(result)
   end
 
   def update
@@ -23,12 +22,13 @@ class UsersController < ApplicationController
   end
 
   def destroy
-
+    @current_user.delete
+    json_response({message: 'Your account has been deleted.'})
   end
 
   private
 
   def user_params
-    params.permit(:first_name, :last_name, :email, :password)
+    params.permit(:first_name, :last_name, :username, :email, :password)
   end
 end

@@ -13,7 +13,7 @@ module ExceptionHandler
     rescue_from ExceptionHandler::InvalidToken, with: :unprocessable_entity
 
     rescue_from ActiveRecord::RecordNotFound do |e|
-      json_response({message: e.message}, :not_found)
+      json_response({error: e.message}, :not_found)
     end
   end
 
@@ -21,11 +21,11 @@ module ExceptionHandler
 
   # 422
   def unprocessable_entity(e)
-    json_response({message: e.message}, :unprocessable_entity)
+    json_response({error: e.message}, :unprocessable_entity)
   end
 
   # 401
   def unauthorized_request(e)
-    json_response({message: e.message}, :unauthorized)
+    json_response({error: e.message}, :unauthorized)
   end
 end

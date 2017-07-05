@@ -46,4 +46,16 @@ class Transaction < ApplicationRecord
 
   end
 
+  def set_visibility_to(visibility)
+    self.visibility = visibility
+  end
+
+  def resolve_charge
+    recipient
+    self.status = 'resolved'
+  end
+
+  def reject_charge
+    self.status = 'rejected'
+  end
 end
