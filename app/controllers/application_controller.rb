@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::API
   include Response
   include ExceptionHandler
+  include UpdateHelper
 
   # Applies to all actions unless otherwise directed
   before_action :authorize_request
