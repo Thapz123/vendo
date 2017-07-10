@@ -10,15 +10,18 @@ class TransactionsController < ApplicationController
   end
 
   def pay
+    user_to_pay = User.find_by(username: params[:username])
 
   end
 
   def charge
+    user_to_charge = User.find_by(username: params[:username])
 
   end
 
   def update
-
+    transaction = Transaction.find_by(id: params[:transaction_id])
+    update_transaction_with_params(transaction, transactions_params)
   end
 
   private
